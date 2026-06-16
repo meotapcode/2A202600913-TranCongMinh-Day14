@@ -267,3 +267,17 @@ Sử dụng thuật toán Lexical Reranker `rerank_by_overlap` viết tại `sol
 ## Part 4 — Reflection (2:20–2:50)
 
 Xem báo cáo chi tiết tại [reflection.md](/reflection.md)
+
+---
+
+## Submission Checklist
+
+- [x] All tests pass: `pytest tests/ -v`
+- [x] `overall_score` implemented
+- [x] `run_regression` implemented
+- [x] `generate_improvement_log` implemented
+- [x] `evaluate_context_recall` + `evaluate_context_precision` implemented (Task 2b)
+- [x] Exercise 3.5 completed: đo Context Recall/Precision + reranking before/after
+- [x] `exercises.md` completed: golden dataset 20 QA (stratified) + benchmark results + rubric
+- [x] `reflection.md` written: 3 failures with 5 Whys + improvement log + CI/CD strategy
+- [x] `solution/solution.py` copied
