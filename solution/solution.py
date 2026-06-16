@@ -274,6 +274,23 @@ class RAGASEvaluator:
         score = ap_sum / num_relevant
         return min(max(score, 0.0), 1.0)
 
+    def evaluate_noise_adherence(self, answer: str, context: str) -> float:
+        """
+        Custom Metric: Measures how grounded the answer is in the context by checking 
+        the ratio of non-context words. Low score indicates high noise/hallucination ratio.
+        
+        Formula:
+            noise_ratio = |answer_tokens - context_tokens| / |answer_tokens|
+            adherence = 1.0 - noise_ratio
+        """
+        answer_tokens = _tokenize(answer)
+        if not answer_tokens:
+            return 1.0
+        context_tokens = _tokenize(context)
+        noise_tokens = answer_tokens - context_tokens
+        score = 1.0 - (len(noise_tokens) / len(answer_tokens))
+        return min(max(score, 0.0), 1.0)
+
     def run_full_eval(
         self,
         answer: str,

@@ -114,6 +114,20 @@ class TestRAGASEvaluator(unittest.TestCase):
         # Minimal overlap (only stopwords like "is" and "a")
         self.assertLess(score, 0.4)
 
+    def test_noise_adherence_full_match(self):
+        context = "Python is a programming language"
+        answer = "Python programming"
+        score = self.evaluator.evaluate_noise_adherence(answer, context)
+        self.assertAlmostEqual(score, 1.0, places=1)
+
+    def test_noise_adherence_in_range(self):
+        context = "Python is a programming language"
+        answer = "Python programming and HTML design"
+        score = self.evaluator.evaluate_noise_adherence(answer, context)
+        # "Python", "programming" are overlap, "HTML", "design" are noise.
+        # Ratio should be 2/4 = 0.5.
+        self.assertAlmostEqual(score, 0.5, places=1)
+
 
 class TestContextMetrics(unittest.TestCase):
     """Retrieval-side RAGAS metrics: Context Recall + Context Precision."""

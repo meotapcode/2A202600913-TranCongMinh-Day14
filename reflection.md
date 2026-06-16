@@ -227,10 +227,18 @@ Theo bài giảng: Evaluate → Analyze → Improve → Augment (add to benchmar
 
 **Nếu dùng trong production, bạn sẽ chọn framework nào? Tại sao?**
 
-> _Trả lời:_ Chọn **DeepEval** kết hợp với **RAGAS**.
-
-| Tiêu chí                | Lý do chọn                                                                                                                                         |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Focus phù hợp vì...     | DeepEval hỗ trợ viết test dạng unit test quen thuộc với các kỹ sư phần mềm, dễ dàng cài đặt các assertion cụ thể.                                  |
-| CI/CD integration vì... | Cả hai framework này đều có tích hợp sâu với Github Actions và có CLI chuyên dụng để xuất report XML/JSON, rất thích hợp làm Quality Gate tự động. |
 | Team workflow vì...     | TruLens thích hợp hơn cho việc monitoring trên online traffic, trong khi DeepEval rất mạnh ở khâu dev-loop giúp team phát triển nhanh và tin cậy.  |
+
+---
+
+## 8. Bonus Points Implementation
+
+### Custom Metric: `evaluate_noise_adherence`
+*   **Vị trí triển khai:** Nằm trong class `RAGASEvaluator` ở [solution.py](file:///Users/meo/Developer/lab/2A202600913-TranCongMinh-Day14/solution/solution.py).
+*   **Ý nghĩa:** Đo lường mức độ trung thực của câu trả lời thông qua tỷ lệ các từ không thuộc ngữ cảnh (noise words). Điểm cao tức là câu trả lời sử dụng hoàn toàn các từ vựng có sẵn trong context, hạn chế việc tự ý thêm các thông tin lạ (giảm thiểu hallucination).
+*   **Unit Tests:** Đã viết đầy đủ tại `test_noise_adherence_full_match` và `test_noise_adherence_in_range` tại [test_solution.py](file:///Users/meo/Developer/lab/2A202600913-TranCongMinh-Day14/tests/test_solution.py).
+
+### Tích hợp CI/CD Script (GitHub Actions)
+*   **File cấu hình:** Đã tạo tại [.github/workflows/ai_eval.yml](file:///Users/meo/Developer/lab/2A202600913-TranCongMinh-Day14/.github/workflows/ai_eval.yml).
+*   **Tính năng:** Tự động kích hoạt khi có sự kiện `push` hoặc `pull_request`, cài đặt Python, cài dependencies, chạy toàn bộ bộ test `pytest` và chạy kiểm tra chất lượng tự động thông qua `solution.py` làm chốt chặn phát hành (Quality Gate).
+
