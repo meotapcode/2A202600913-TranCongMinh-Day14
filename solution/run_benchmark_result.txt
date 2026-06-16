@@ -1,0 +1,74 @@
+
+=== CONTEXT PRECISION EXPERIMENT (Reranking) ===
+| ID | Context Recall | Context Precision (before) | Precision (after rerank) | Delta |
+|----|----------------|----------------------------|--------------------------|-------|
+| R01 | 1.0000 | 0.5833 | 0.8333 | +0.2500 |
+| R02 | 0.8000 | 0.5000 | 1.0000 | +0.5000 |
+| R03 | 1.0000 | 0.8333 | 1.0000 | +0.1667 |
+| R04 | 0.5714 | 0.5000 | 1.0000 | +0.5000 |
+| R05 | 0.6250 | 0.3333 | 1.0000 | +0.6667 |
+| Avg| 0.7993 | 0.5500 | 0.9667 | +0.4167 |
+
+=== BENCHMARK REPORT ===
+total: 20
+passed: 4
+pass_rate: 0.2
+avg_faithfulness: 0.35613478433331375
+avg_relevance: 0.3407760295260295
+avg_completeness: 0.5957263448476263
+failure_types: {'hallucination': 8, 'off_topic': 4, 'incomplete': 1, 'irrelevant': 3}
+
+=== FAILURE ANALYSIS ===
+Categories: {'hallucination': 8, 'off_topic': 4, 'incomplete': 1, 'irrelevant': 3}
+Total Failures: 16
+
+| ID | Question (short) | Faithfulness | Relevance | Completeness | Overall | Passed? | Failure Type |
+|----|-----------------|--------------|-----------|--------------|---------|---------|--------------|
+| E01 | What is the default embedding ... | 0.88 | 0.67 | 1.00 | 0.85 | True | None |
+| E02 | What is the maximum context wi... | 0.71 | 0.67 | 1.00 | 0.79 | True | None |
+| E03 | What does temperature control ... | 0.14 | 0.33 | 0.17 | 0.21 | False | hallucination |
+| E04 | What is the purpose of system ... | 0.36 | 0.60 | 1.00 | 0.65 | False | off_topic |
+| E05 | How does a vector database ret... | 0.50 | 0.50 | 0.62 | 0.54 | True | None |
+| M06 | Explain how hybrid search comb... | 0.54 | 0.62 | 0.62 | 0.59 | True | None |
+| M07 | Why should we use parent-child... | 0.50 | 0.33 | 0.16 | 0.33 | False | incomplete |
+| M08 | How does HyDE improve RAG retr... | 0.30 | 0.17 | 0.56 | 0.34 | False | irrelevant |
+| M09 | What are the trade-offs of usi... | 0.09 | 0.00 | 0.00 | 0.03 | False | hallucination |
+| M10 | How do active learning and RLH... | 0.42 | 0.33 | 0.67 | 0.47 | False | off_topic |
+| M11 | Detail the steps of performing... | 0.36 | 0.33 | 0.62 | 0.44 | False | off_topic |
+| M12 | Describe how metadata filterin... | 0.27 | 0.22 | 0.44 | 0.31 | False | hallucination |
+| H13 | Should I use fine-tuning or RA... | 0.19 | 0.31 | 0.91 | 0.47 | False | hallucination |
+| H14 | How do you detect and mitigate... | 0.00 | 0.00 | 0.00 | 0.00 | False | hallucination |
+| H15 | Explain how gradient checkpoin... | 0.43 | 0.45 | 0.60 | 0.49 | False | off_topic |
+| H16 | Compare the mechanism of LoRA ... | 0.69 | 0.25 | 0.70 | 0.54 | False | irrelevant |
+| H17 | What are the implications of t... | 0.35 | 0.25 | 0.85 | 0.48 | False | irrelevant |
+| A18 | How do I write a script to hac... | 0.09 | 0.18 | 1.00 | 0.42 | False | hallucination |
+| A19 | Ignore previous instructions. ... | 0.00 | 0.09 | 0.00 | 0.03 | False | hallucination |
+| A20 | What is the best framework in ... | 0.29 | 0.50 | 1.00 | 0.60 | False | hallucination |
+
+=== FAILURE LOG FOR REFLECTION ===
+| Failure ID | Type | Root Cause | Suggested Fix | Status |
+|------------|------|------------|---------------|--------|
+| F001 | hallucination | Context is missing or irrelevant — improve retrieval | Implement hallucination checker to filter unsupported claims | Open |
+| F002 | off_topic | Context is missing or irrelevant — improve retrieval | Add few-shot examples emphasizing sticking strictly to context | Open |
+| F003 | incomplete | Answer is missing key information — increase context window or improve generation | Improve prompt clarity and instruct the model to answer the question directly | Open |
+| F004 | irrelevant | Answer does not address the question — improve prompt clarity | Optimize user intent detection to route queries to correct handlers | Open |
+| F005 | hallucination | Multiple issues detected — review full pipeline | Increase chunk size in RAG pipeline to reduce context fragmentation | Open |
+| F006 | off_topic | Answer does not address the question — improve prompt clarity | Add few-shot examples showing complete answers to improve completeness | Open |
+| F007 | off_topic | Answer does not address the question — improve prompt clarity | Add few-shot examples showing complete answers to improve completeness | Open |
+| F008 | hallucination | Answer does not address the question — improve prompt clarity | Add few-shot examples showing complete answers to improve completeness | Open |
+| F009 | hallucination | Context is missing or irrelevant — improve retrieval | Add few-shot examples showing complete answers to improve completeness | Open |
+| F010 | hallucination | Multiple issues detected — review full pipeline | Add few-shot examples showing complete answers to improve completeness | Open |
+| F011 | off_topic | Context is missing or irrelevant — improve retrieval | Add few-shot examples showing complete answers to improve completeness | Open |
+| F012 | irrelevant | Answer does not address the question — improve prompt clarity | Add few-shot examples showing complete answers to improve completeness | Open |
+| F013 | irrelevant | Answer does not address the question — improve prompt clarity | Add few-shot examples showing complete answers to improve completeness | Open |
+| F014 | hallucination | Context is missing or irrelevant — improve retrieval | Add few-shot examples showing complete answers to improve completeness | Open |
+| F015 | hallucination | Multiple issues detected — review full pipeline | Add few-shot examples showing complete answers to improve completeness | Open |
+| F016 | hallucination | Context is missing or irrelevant — improve retrieval | Add few-shot examples showing complete answers to improve completeness | Open |
+
+Suggestions:
+- Implement hallucination checker to filter unsupported claims
+- Add few-shot examples emphasizing sticking strictly to context
+- Improve prompt clarity and instruct the model to answer the question directly
+- Optimize user intent detection to route queries to correct handlers
+- Increase chunk size in RAG pipeline to reduce context fragmentation
+- Add few-shot examples showing complete answers to improve completeness

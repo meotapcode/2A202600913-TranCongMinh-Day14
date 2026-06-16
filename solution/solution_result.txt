@@ -1,0 +1,32 @@
+=== Benchmark Report ===
+  total: 5
+  passed: 0
+  pass_rate: 0.0
+  avg_faithfulness: 0.112991452991453
+  avg_relevance: 0.8300000000000001
+  avg_completeness: 0.21706349206349204
+  failure_types: {'hallucination': 5}
+
+=== Failures (5) ===
+Failure Categories: {'hallucination': 5}
+  Root cause: Context is missing or irrelevant — improve retrieval
+  Root cause: Context is missing or irrelevant — improve retrieval
+  Root cause: Answer is missing key information — increase context window or improve generation
+  Root cause: Context is missing or irrelevant — improve retrieval
+  Root cause: Multiple issues detected — review full pipeline
+
+Improvement Suggestions:
+  - Implement hallucination checker to filter unsupported claims
+  - Add few-shot examples emphasizing sticking strictly to context
+  - Implement a robust reranking step (e.g. cross-encoder) to bring relevant contexts to the top
+  - Increase top-k retrieved chunks to cover more evidence
+  - Regularly calibrate LLM-as-Judge scores against human labels to detect drift
+
+=== Improvement Log ===
+| Failure ID | Type | Root Cause | Suggested Fix | Status |
+|------------|------|------------|---------------|--------|
+| F001 | hallucination | Context is missing or irrelevant — improve retrieval | Implement hallucination checker to filter unsupported claims | Open |
+| F002 | hallucination | Context is missing or irrelevant — improve retrieval | Add few-shot examples emphasizing sticking strictly to context | Open |
+| F003 | hallucination | Answer is missing key information — increase context window or improve generation | Implement a robust reranking step (e.g. cross-encoder) to bring relevant contexts to the top | Open |
+| F004 | hallucination | Context is missing or irrelevant — improve retrieval | Increase top-k retrieved chunks to cover more evidence | Open |
+| F005 | hallucination | Multiple issues detected — review full pipeline | Regularly calibrate LLM-as-Judge scores against human labels to detect drift | Open |
